@@ -35,5 +35,23 @@ namespace Examen.Controllers
             var studentResponseDto = _mapper.Map<StudentResponseDto>(studentCreated);
             return Ok(studentResponseDto);
         }
+
+        [HttpDelete("{name}")]
+        public async Task<ActionResult<Student>> DeleteStudent(string name)
+        {
+            var studentDeleted = await _studentService.DeleteStudent(name);
+            var studentResponseDto = _mapper.Map<StudentResponseDto>(studentDeleted);
+            return Ok(studentResponseDto);
+        }
+
+        [HttpPatch("{name}")]
+        public async Task<ActionResult<StudentResponseDto>> UpdateStudent(string name)
+        {
+            var student = await _studentService.GetByNameAsync(name);
+            student.Points += 1;
+            await _studentService.UpdateStudent(student);
+            var studentResponseDto = _mapper.Map<StudentResponseDto>(student);
+            return Ok(studentResponseDto);
+        }
     }
 }

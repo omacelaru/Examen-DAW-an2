@@ -8,6 +8,31 @@ type StudentListProps = {
   setStudents: (students: Student[]) => void;
 };
 const StudentList = ({students,setStudents}:StudentListProps) => {
+
+  const handleUpdatePoints = async (name: string) => {
+    try {
+      const response = await axios.patch(`https://localhost:7289/Student/${name}`);
+      console.log('Student updated:', response.data);
+
+      const updatedStudentsResponse = await axios.get('https://localhost:7289/Student');
+      setStudents(updatedStudentsResponse.data);
+    } catch (error) {
+      console.error('Error updating student points', error);
+    }
+  };
+
+  const handleDeleteStudent = async (name: string) => {
+    try {
+      const response = await axios.delete(`https://localhost:7289/Student/${name}`);
+      console.log('Student deleted:', response.data);
+
+      const updatedStudentsResponse = await axios.get('https://localhost:7289/Student');
+      setStudents(updatedStudentsResponse.data);
+    } catch (error) {
+      console.error('Error deleting student', error);
+    }
+  };
+
   useEffect(() => {
     const fetchStudents = async () => {
       try {
@@ -17,7 +42,6 @@ const StudentList = ({students,setStudents}:StudentListProps) => {
         console.error('Error fetching students', error);
       }
     };
-
     fetchStudents();
   }, []);
 
@@ -31,7 +55,9 @@ const StudentList = ({students,setStudents}:StudentListProps) => {
       <ul>
         {students.slice().reverse().map((student) => (
           <li key={student.id}>
+            <button onClick={() => handleDeleteStudent(student.name)}>Delete Student</button>
             {student.name} {student.points}
+            <button onClick={() => handleUpdatePoints(student.name)}>Add one point</button>
           </li>
         ))}
       </ul>

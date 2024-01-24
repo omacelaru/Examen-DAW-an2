@@ -5,5 +5,6 @@ namespace Examen.Repositories.StudentRepository
 {
     public interface IStudentRepository : IGenericRepository<Student>
     {
+        Task<Student> GetByNameAsync(string name);
     }
 }

@@ -24,5 +24,26 @@ namespace Examen.Services.StudentService
             await _studentRepository.SaveAsync();
             return student;
         }
+
+        public async Task<Student> DeleteStudent(string name)
+        {
+            var student = await _studentRepository.GetByNameAsync(name);
+            _studentRepository.Delete(student);
+            await _studentRepository.SaveAsync();
+            return student;
+        }
+
+        public async Task<Student> GetByNameAsync(string name)
+        {
+            return await _studentRepository.GetByNameAsync(name);
+        }
+
+        public async Task<Student> UpdateStudent(Student student)
+        {
+            _studentRepository.Update(student);
+            await _studentRepository.SaveAsync();
+            return student;
+        }
+
     }
 }

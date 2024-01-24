@@ -6,5 +6,8 @@ namespace Examen.Services.StudentService
     {
         Task<IEnumerable<Student>> GetAllStudents();
         Task<Student> CreateStudent(Student student);
+        Task<Student> DeleteStudent(string name);
+        Task<Student> GetByNameAsync(string name);
+        Task<Student> UpdateStudent(Student student);
     }
 }
