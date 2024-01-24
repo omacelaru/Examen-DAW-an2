@@ -11,8 +11,9 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 // Add services to the container.
 builder.Services.AddAutoMapper(typeof(MapperProfile));
 builder.Services.AddControllers();
-builder.Services.AddRepositories();
 builder.Services.AddServices();
+builder.Services.AddRepositories();
+builder.Services.AddAutoMapper(typeof(MapperProfile));
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
