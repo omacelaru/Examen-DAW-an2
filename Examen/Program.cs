@@ -1,4 +1,6 @@
 using Examen.Data;
+using Examen.Helpers;
+using Examen.Helpers.Extensions;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -7,8 +9,10 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 // Add services to the container.
-
+builder.Services.AddAutoMapper(typeof(MapperProfile));
 builder.Services.AddControllers();
+builder.Services.AddRepositories();
+builder.Services.AddServices();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
