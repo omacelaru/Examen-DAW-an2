@@ -1,70 +1,108 @@
-import React, { useEffect } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { BoredResponse } from './BoredResponse';
-import { Dog } from './Dog';
-import { config } from './config';
+import { Student } from './Response/Student';
+import './App.css';
 
-function App() {
+type StudentListProps = {
+  students: Student[];
+  setStudents: (students: Student[]) => void;
+};
+const StudentList = ({students,setStudents}:StudentListProps) => {
+  useEffect(() => {
+    const fetchStudents = async () => {
+      try {
+        const response = await axios.get('https://localhost:7289/Student');
+        setStudents(response.data);
+      } catch (error) {
+        console.error('Error fetching students', error);
+      }
+    };
 
-  const [pressCount, setPressCount] = React.useState(0);
-  const [name, setName] = React.useState("");
-  const [rasa, setRasa] = React.useState("");
-  const [culoare, setCuloare] = React.useState("");
-  const [lastDog, setLastDog] = React.useState<Dog | null>(null);
+    fetchStudents();
+  }, []);
+
+  useEffect(() => {
+    console.log('Students:', students);
+  }, [students]);
 
   return (
-    <div className="App">
-      <header className="App-header">
-        <p>
-          Test
-        </p>
-        
-        <p>Ai apasat butonul de {pressCount}</p>
-        <button onClick = {() => setPressCount(pressCount + 1)}>
-          Press me
-        </button>
-
-        <form style={{display: 'flex', flexDirection: 'column'}} onSubmit={(e)=>{e.preventDefault()}}>
-          <label> Nume </label>
-          <input value={name} className='form-input' type = "text" onChange={(e) => {
-            setName(e.target.value);
-          }}/>
-          <label> Rasa </label>
-          <input value={rasa} className='form-input' type = "text" onChange={(e) => {
-            setRasa(e.target.value);
-          }}/>
-          <label> Culoare </label>
-          <input value = {culoare} className = 'form-input' type = "text" onChange={(e) => {
-            setCuloare(e.target.value);
-          }}/>
-          <button className='button' onClick = {() => {
-            axios.post("http://localhost:5244/api/Dog", {
-              Nume: name,
-              Rasa: rasa,
-              Culoare: culoare
-            }, config).then((response) => {
-              setLastDog(response.data);
-            })
-            
-            setCuloare("");
-            setName("");
-            setRasa("");
-          }}>Adauga animal</button>
-        </form>
-        {
-          lastDog ? 
-          <>
-            <p>{lastDog.id}</p>
-            <p>{lastDog.nume}</p>
-            <p>{lastDog.rasa}</p>
-            <p>{lastDog.culoare}</p>
-          </> : "No dog added yet"
-        }
-      </header>
+    <div>
+      <h1>Student List</h1>
+      <ul>
+        {students.slice().reverse().map((student) => (
+          <li key={student.id}>
+            {student.name} {student.points}
+          </li>
+        ))}
+      </ul>
     </div>
   );
-}
+};
+
+const CreateStudentForm = ({setStudents}:StudentListProps) => {
+  const [formData, setFormData] = useState({
+    name: '',
+    // Add other fields as needed
+  });
+
+  const handleInputChange = (e:any) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const handleFormSubmit = async (e:any) => {
+    e.preventDefault();
+
+    try {
+      const response = await axios.post('https://localhost:7289/Student', formData);
+      console.log('Student created:', response.data);
+
+      const updatedStudentsResponse = await axios.get('https://localhost:7289/Student');
+      setStudents(updatedStudentsResponse.data);
+    } catch (error) {
+      console.error('Error creating student', error);
+    }
+  };
+
+  return (
+    <div>
+      <h1>Create Student</h1>
+      <form onSubmit={handleFormSubmit}>
+        <label>
+          Name:
+          <input
+            type="text"
+            name="name"
+            value={formData.name}
+            onChange={handleInputChange}
+          />
+        </label>
+        <br />
+        <button type="submit">Create Student</button>
+      </form>
+    </div>
+  );
+};
+
+const StudentPage = () => {
+  const [students, setStudents] = useState<Student[]>([]);
+
+  return (
+    <>
+    <CreateStudentForm setStudents={setStudents} students={students}/>
+    <StudentList setStudents={setStudents} students={students}/>
+    </>
+  );
+};
+
+const App = () => {
+  return (
+    <div>
+      <StudentPage />
+    </div>
+  );
+};
 
 export default App;
