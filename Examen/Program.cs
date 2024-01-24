@@ -9,7 +9,6 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 // Add services to the container.
-builder.Services.AddAutoMapper(typeof(MapperProfile));
 builder.Services.AddControllers();
 builder.Services.AddServices();
 builder.Services.AddRepositories();
