@@ -9,13 +9,10 @@ import { config } from './config';
 function App() {
 
   const [pressCount, setPressCount] = React.useState(0);
- 
   const [name, setName] = React.useState("");
   const [rasa, setRasa] = React.useState("");
   const [culoare, setCuloare] = React.useState("");
   const [lastDog, setLastDog] = React.useState<Dog | null>(null);
-
-  
 
   return (
     <div className="App">
