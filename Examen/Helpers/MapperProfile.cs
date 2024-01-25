@@ -4,6 +4,8 @@ using Examen.Models.Author.Dto;
 using Examen.Models.Book;
 using Examen.Models.Book.Dto;
 using Examen.Models.BookAuthor;
+using Examen.Models.PublishingHouse;
+using Examen.Models.PublishingHouse.Dto;
 
 namespace Examen.Helpers
 {
@@ -18,6 +20,9 @@ namespace Examen.Helpers
 
             CreateMap<Author, AuthorResponseDto>();
             CreateMap<AuthorRequestDto, Author>();
+
+            CreateMap<PublishingHouse, PublishingHouseResponseDto>();
+            CreateMap<PublishingHouseRequestDto, PublishingHouse>();
 
         }
     }

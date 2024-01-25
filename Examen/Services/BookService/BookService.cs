@@ -27,6 +27,7 @@ namespace Examen.Services.BookService
         {
             var newBook = _mapper.Map<Book>(book);
             await _bookRepository.CreateAsync(newBook);
+            await _bookRepository.SaveAsync();
             var newBookDto = _mapper.Map<BookResponseDto>(newBook);
             return newBookDto;
         }

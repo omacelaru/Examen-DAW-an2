@@ -5,5 +5,6 @@ namespace Examen.Repositories.AuthorRepository
 {
     public interface IAuthorRepository : IGenericRepository<Author>
     {
+        Task<IEnumerable<Author>> FindAllAuthorsAsync();
     }
 }
