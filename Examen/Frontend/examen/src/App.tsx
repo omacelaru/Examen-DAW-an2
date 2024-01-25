@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Student } from './Response/Student';
+import { Student } from './Responses/Student';
 import './App.css';
 
 type StudentListProps = {
