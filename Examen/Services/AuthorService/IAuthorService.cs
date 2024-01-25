@@ -1,4 +1,5 @@
 ﻿using Examen.Models.Author.Dto;
+using Examen.Models.Author.Dto.WithBooks;
 
 namespace Examen.Services.AuthorService
 {
@@ -6,5 +7,6 @@ namespace Examen.Services.AuthorService
     {
         Task<IEnumerable<AuthorResponseDto>> GetAuthors();
         Task<AuthorResponseDto> CreateAuthor(AuthorRequestDto author);
+        Task<AuthorWithBooksResponseDto> CreateAuthorWithBooks(AuthorWithBooksRequestDto author);
     }
 }

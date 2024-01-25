@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Examen.Models.Author;
 using Examen.Models.Author.Dto;
+using Examen.Models.Author.Dto.WithBooks;
 using Examen.Models.Book;
 using Examen.Models.Book.Dto;
 using Examen.Models.BookAuthor;
@@ -24,6 +25,8 @@ namespace Examen.Helpers
             CreateMap<PublishingHouse, PublishingHouseResponseDto>();
             CreateMap<PublishingHouseRequestDto, PublishingHouse>();
 
+            CreateMap<AuthorWithBooksRequestDto, Author>();
+            CreateMap<Author, AuthorWithBooksResponseDto>();
         }
     }
 }

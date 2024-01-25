@@ -4,10 +4,30 @@ body {
   font-family: 'Arial', sans-serif;
   margin: 0;
   padding: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
+  display: grid;
+  grid-template-areas:
+    "bookList authorList PHList"
+    "bookCreate authorCreate PHCreate";
+  gap: 20px;
+}
+
+.bookList {
+  grid-area: bookList;
+}
+.authorList {
+  grid-area: authorList;
+}
+.PHList {
+  grid-area: PHList;
+}
+.bookCreate {
+  grid-area: bookCreate;
+}
+.authorCreate {
+  grid-area: authorCreate;
+}
+.PHCreate {
+  grid-area: PHCreate;
 }
 
 .container {
@@ -15,12 +35,12 @@ body {
   width: 100%;
   margin: 20px;
   display: flex;
-  justify-content: space-between; /* Align items to the start and end of the container */
+  justify-content: space-between;
 }
 
 .left-column,
 .right-column {
-  width: 48%; /* Adjust the width as needed */
+  width: 48%;
 }
 
 h1 {
